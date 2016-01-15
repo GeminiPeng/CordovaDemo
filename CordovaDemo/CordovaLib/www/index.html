@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <title>PhoneGap Test</title>
+        <script type="text/javascript" charset="utf-8">
+    var pictureSource;  //设定图片来源
+    var destinationType; //选择返回数据的格式
+
+    document.addEventListener("deviceready",onDeviceReady,false);
+
+    // Cordova准备好了可以使用了
+    function onDeviceReady() {
+        pictureSource=navigator.camera.PictureSourceType;
+        destinationType=navigator.camera.DestinationType;
+    }
+    var a=0;
+    function onPhotoDataSuccess(imageData) {
+	  a++;
+      // base64 encoded image data
+      var smallImage = document.getElementById('smallImage'+a);
+
+      smallImage.style.display = 'block';
+    //在使用base64编码的时候需要使用这样的前缀
+      smallImage.src = "data:image/jpeg;base64," + imageData;
+    }
+
+    // Called when a photo is successfully retrieved
+    //
+    function onPhotoURISuccess(imageURI) {
+      // image file URI 
+      var largeImage = document.getElementById('largeImage');
+      largeImage.style.display = 'block';
+    //使用image file URI 直接赋值就可以了
+      largeImage.src = imageURI;
+    }
+
+    // 第一个按钮调用函数
+    function capturePhoto() {
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
+        destinationType: destinationType.DATA_URL });
+    }
+
+
+    function onFail(message) {
+      alert('Failed because: ' + message);
+    }
+
+    </script>
+  
+  <style>
+    .btn_flat{BORDER-RIGHT:#ffffff 1px solid;BORDER-TOP:#ffffff 1px   solid;
+    FONT-SIZE:20px;
+    FILTER: BORDER-LEFT:   #ffffff   1px   solid;
+    CURSOR: hand;
+    COLOR: black;
+    BORDER-BOTTOM: #ffffff 1px solid;
+    height:80px;
+    width:40%;
+    text-align:center}
+    </style>
+
+    
+    </head>
+    <body bgcolor="#FFFFFF"><br><br><br><br><br><br>
+  <div style="text-align:center">
+  <button class="btn_flat" onclick="capturePhoto();"><h1>Capture Photo</h1></button> <br>
+
+  </div>
+    1<img style="display:none;width:560px;height:560px;" id="smallImage1" src="" />
+	2<img style="display:none;width:560px;height:560px;" id="smallImage2" src="" />
+	3<img style="display:none;width:560px;height:560px;" id="smallImage3" src="" />
+    4<img style="display:none;width:560px;height:560px;" id="smallImage3" src="" />
+
+  <script type="text/javascript" src="cordova.js"></script>
+    </body>
+</html>
